@@ -7,36 +7,78 @@ class StatsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer"
+    @sorted_numbers = "#{@numbers.sort}"
 
-    @count = "Replace this string with your answer"
+    @count = "#{@numbers.count}"
 
-    @minimum = "Replace this string with your answer"
+    @minimum = "#{@numbers.min}"
 
-    @maximum = "Replace this string with your answer"
+    @maximum = "#{@numbers.max}"
 
-    @range = "Replace this string with your answer"
+    @range = "#{@numbers.max - @numbers.min}"
 
     # Median
     # ======
+    numbers = @numbers.sort
+    how_long = @numbers.count
+    
+    if how_long.odd? == true
+      median = numbers[(how_long/2)]
+    else
+      left_of_middle = numbers[(how_long/2)-1]
+      right_of_middle = numbers[how_long/2]
+      median = (left_of_middle+right_of_middle)/2.0
+    end
 
-    @median = "Replace this string with your answer"
+    @median = "#{median}"
 
-    @sum = "Replace this string with your answer"
+    sum = 0
+    @numbers.each do |num|
+      sum += num
+    end 
 
-    @mean = "Replace this string with your answer"
+    @sum = "#{sum}"
+
+    @mean = "#{sum/@numbers.count}"
 
     # Variance
     # ========
+    difference_from_mean = []
+    
+    @numbers.each do |num|
+      difference_from_mean.push((sum/@numbers.count)-num)
+    end
+    
+    squared_difference_from_mean = []
+    
+    difference_from_mean.each do |num|
+      squared_difference_from_mean.push(num**2)
+    end
+  
+    variance_sum = 0
+      squared_difference_from_mean.each do |num|
+      variance_sum += num
+    end 
+    variance = variance_sum/squared_difference_from_mean.count
 
-    @variance = "Replace this string with your answer"
+    @variance = "#{variance}"
 
-    @standard_deviation = "Replace this string with your answer"
+    @standard_deviation = "#{variance**0.5}"
 
     # Mode
     # ====
+    mode = @numbers[0]
+    count_of_mode = @numbers.count(@numbers[0])
+      
+    @numbers.each do |num|
+      if @numbers.count(num) > count_of_mode
+        count_of_mode = @numbers.count(num)
+        mode = num
+      end
+    end 
 
-    @mode = "Replace this string with your answer"
+
+    @mode = "#{mode}"
 
     # ================================================================================
     # Your code goes above.
