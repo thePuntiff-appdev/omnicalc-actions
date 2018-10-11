@@ -12,7 +12,8 @@ class GeocodingController < ApplicationController
     #   characters removed, is in the string url_safe_street_address.
     # ==========================================================================
     
-    url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + url_safe_street_address + "&key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78"
+    googlemaps_key = ENV.fetch("GOOGLEMAPS_KEY")
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{url_safe_street_address}&key=#{googlemaps_key}"
     raw_data = open(url).read
     parsed_data = JSON.parse(raw_data)
     lat = parsed_data.dig("results", 0, "geometry", "location", "lat")

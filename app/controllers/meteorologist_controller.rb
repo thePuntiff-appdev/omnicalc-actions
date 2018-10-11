@@ -17,7 +17,9 @@ class MeteorologistController < ApplicationController
     lat = goog_parsed_data.dig("results", 0, "geometry", "location", "lat")
     lng = goog_parsed_data.dig("results", 0, "geometry", "location", "lng")
     
-    darksky_url = "https://api.darksky.net/forecast/dcdc1364c62099b31d76c0e99232e7c8/#{lat},#{lng}"
+    darksky_key = ENV.fetch("DARKSKY_KEY")
+    
+    darksky_url = "https://api.darksky.net/forecast/#{darksky_key}/#{lat},#{lng}"
     darksky_raw_data = open(darksky_url).read
     darksky_parsed_data = JSON.parse(darksky_raw_data)
 
